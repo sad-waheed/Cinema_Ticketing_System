@@ -1,0 +1,27 @@
+<!-- app/views/admin/halls/show.html.erb -->
+
+<h1>Hall: <%= @hall.name %></h1>
+
+<h2>Seats Layout</h2>
+
+<% if @seats.any? %>
+  <% grouped_seats = @seats.group_by(&:row).sort.to_h %>
+
+  <% grouped_seats.each do |row, seats_in_row| %>
+    <div style="margin-bottom: 1rem;">
+      <strong>Row <%= row %>:</strong>
+      <% seats_in_row.sort_by(&:seat_number).each do |seat| %>
+        <span style="display: inline-block; margin-right: 8px; background: #eee; padding: 5px 8px; border-radius: 4px;">
+          Seat <%= seat.seat_number %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+
+<% else %>
+  <p>No seats defined for this hall.</p>
+<% end %>
+
+<br>
+
+<%= link_to "← Back to Halls", admin_halls_path, style: "text-decoration: none; color: #333;" %>

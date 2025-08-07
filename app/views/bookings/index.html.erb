@@ -1,0 +1,18 @@
+<h1>My Bookings</h1>
+
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% end %>
+
+<% @bookings.each do |booking| %>
+  <div class="booking">
+    <p><strong>Movie:</strong> <%= booking.show.movie.title %></p>
+    <p><strong>Show Time:</strong> <%= booking.show.start_time.strftime("%B %d, %Y %H:%M") %></p>
+    <p><strong>Status:</strong> <%= booking.status.capitalize %></p>
+    <%= link_to "View Details", booking_path(booking), class: "btn btn-primary" %>
+  </div>
+  <hr>
+<% end %>
+
+<!-- ✅ Add Pagy Navigation Here -->
+<%= pagy_nav(@pagy).html_safe %>

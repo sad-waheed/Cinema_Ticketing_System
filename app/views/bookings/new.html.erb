@@ -1,0 +1,58 @@
+<h1>Book Seats for <%= @show.movie.title %></h1>
+
+<p><strong>Time:</strong> <%= @show.start_time.strftime("%B %d, %Y %H:%M") %></p>
+<p><strong>Hall:</strong> <%= @show.hall.name %></p>
+
+<!-- Flash Messages Section -->
+<% if flash.any? %>
+  <div>
+    <% flash.each do |type, message| %>
+      <% case type.to_s %>
+    <% when 'notice', 'success' %>
+        <p style="color: green; font-weight: bold;"><%= message %></p>
+      <% when 'error', 'alert' %>
+        <p style="color: red; font-weight: bold;"><%= message %></p>
+      <% when 'warning' %>
+        <p style="color: orange; font-weight: bold;"><%= message %></p>
+      <% else %>
+        <p style="color: blue; font-weight: bold;"><%= message %></p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- Model Errors Section -->
+<% if @booking&.errors&.any? %>
+  <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
+    <h5>Please fix the following errors:</h5>
+    <ul>
+      <% @booking.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with url: bookings_path(show_id: @show.id), method: :post, local: true do %>
+  <%= hidden_field_tag :show_id, @show.id %>
+  <h3>Select Seats:</h3>
+  <%if @seats.present? %>
+    <% if @seats.any? %>
+      <div>
+        <% @seats.each do |seat| %>
+          <label>
+            <%= check_box_tag "seat_ids[]", seat.id %>
+            <%= "#{seat.row}-#{seat.seat_number}" %>
+          </label>
+          <br>
+        <% end %>
+      </div>
+      <br>
+      <%= submit_tag "Confirm Booking" %>
+    <% else %>
+      <p style="color: red;">Sorry, no seats available for this show.</p>
+    <% end %>
+  <% else %>
+    <p style="color: red;">Please select seats.</p>
+  <% end %>
+<% end %>

@@ -1,0 +1,43 @@
+<h1>Create New Hall</h1>
+
+<%= form_with url: admin_halls_path, method: :post, local: true do |f| %>
+  <div>
+    <%= label_tag :name, "Hall Name" %><br>
+    <%= text_field_tag :name, nil, required: true %>
+  </div>
+
+  <div>
+    <%= label_tag :row_count, "Number of Rows (e.g. 8 for A to H)" %><br>
+    <%= number_field_tag :row_count, nil, required: true %>
+  </div>
+
+  <div id="seats-per-row-container">
+    <!-- JS will dynamically insert row seat fields here -->
+  </div>
+
+  <br>
+  <%= submit_tag "Create Hall" %>
+<% end %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rowInput = document.querySelector("[name='row_count']");
+        const seatContainer = document.getElementById("seats-per-row-container");
+
+        rowInput.addEventListener("change", function () {
+            const rowCount = parseInt(this.value);
+            seatContainer.innerHTML = "";
+
+            for (let i = 0; i < rowCount; i++) {
+                const rowLetter = String.fromCharCode(65 + i); // 'A', 'B', etc.
+
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = `
+          <label>Seats in Row ${rowLetter}:</label>
+          <input type="number" name="seats[${rowLetter}]" min="1" required>
+        `;
+                seatContainer.appendChild(wrapper);
+            }
+        });
+    });
+</script>

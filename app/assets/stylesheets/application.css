@@ -1,0 +1,47 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+.home-button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.home-button:hover {
+    background-color: #2980b9;
+}
+.login-button, .signup-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #007BFF;  /* Bootstrap blue */
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;  /* Darker blue */
+}
+
+.signup-button {
+    background-color: #28a745;  /* Bootstrap green */
+}
+
+.signup-button:hover {
+    background-color: #1e7e34;  /* Darker green */
+}

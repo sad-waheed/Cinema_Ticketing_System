@@ -1,0 +1,18 @@
+<h1>Booking Details</h1>
+
+<p><strong>Movie:</strong> <%= @booking.show.movie.title %></p>
+<p><strong>Show Time:</strong> <%= @booking.show.start_time.strftime("%B %d, %Y %H:%M") %></p>
+<p><strong>Status:</strong> <%= @booking.status.capitalize %></p>
+
+<h3>Booked Seats:</h3>
+<ul>
+  <% @booking.seats.each do |seat| %>
+    <li><%= "#{seat.row}-#{seat.seat_number}" %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to My Bookings", bookings_path, class: "btn btn-secondary" %>
+
+<% if current_user == @booking.user && !@booking.cancelled? %>
+  <%= button_to "Cancel Booking", cancel_booking_path(@booking), method: :patch, data: { confirm: "Are you sure you want to cancel this booking?" }, class: "btn btn-danger" %>
+<% end %>

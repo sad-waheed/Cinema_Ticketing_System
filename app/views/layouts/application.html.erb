@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cinema Ticket System</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</head>
+
+<body>
+<header style="background: #333; padding: 1rem; color: white; display: flex; align-items: center; justify-content: space-between;">
+  <div style="display: flex; align-items: center;">
+    <h1 style="margin-right: 2rem;">🎬 Cinema Booking</h1>
+    <%= link_to "Home", (admin_logged_in? ? admin_movies_path : movies_path), class: "home-button", style: "margin-right: 1rem; color: white;" %>
+
+    <% if logged_in? %>
+      <span>Welcome, <%= current_user.name %>!</span>
+      <%= link_to "View Bookings", bookings_path, class: "view-bookings-button", style: "margin-left: 1rem; color: white; text-decoration: underline;" %>
+      <%= button_to "Log Out", session_path(current_user), method: :delete, class: "logout-button", style: "margin-left: 1rem;" %>
+    <% elsif admin_logged_in? %>
+      <span>Welcome, Admin <%= current_admin.name %>!</span>
+      <li><%= link_to "Manage Movies", admin_movies_path %></li>
+      <li><%= link_to "Manage Halls", admin_halls_path %></li>
+      <li><%= link_to "Manage Users", admin_users_path(role: "admin") %></li>
+      <%= button_to "Log Out", admin_session_path(current_admin), method: :delete, class: "logout-button", style: "margin-left: 1rem;" %>
+    <% else %>
+      <%= link_to "User Login", new_session_path, class: "login-button", style: "color: white; margin-right: 1rem;" %>
+      <%= link_to "Sign Up", new_user_path, class: "signup-button", style: "color: white; margin-right: 1rem;" %>
+      <%= link_to "Admin Login", new_admin_session_path, class: "admin-login-button", style: "color: yellow; text-decoration: underline;" %>
+    <% end %>
+  </div>
+</header>
+
+
+
+  <%= yield %>
+</body>
+</html>

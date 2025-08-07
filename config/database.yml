@@ -1,0 +1,38 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+# Custom Cinema DB Setup
+cinema_dev: &cinema_db_config
+  <<: *default
+  database: cinema_db
+  username: postgres
+  password: 123456
+  host: localhost
+
+development:
+  <<: *cinema_db_config
+
+test:
+  <<: *default
+  database: cinema_system_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: cinema_system_production
+    username: cinema_system
+    password: <%= ENV["CINEMA_SYSTEM_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: cinema_system_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: cinema_system_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: cinema_system_production_cable
+    migrations_paths: db/cable_migrate

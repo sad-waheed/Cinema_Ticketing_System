@@ -1,0 +1,28 @@
+<h2>🎬 Now Showing</h2>
+
+<% if @movies.any? %>
+  <% @movies.each do |movie| %>
+    <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+
+      <% if movie.image_data.present? %>
+        <img src="<%= movie.image_base64 %>" alt="Image of <%= movie.title %>" style="width: 100px; height: auto; object-fit: contain; border-radius: 4px;" />
+      <% else %>
+        <div style="width: 100px; height: 140px; background: #eee; display: flex; align-items: center; justify-content: center; color: #999; font-style: italic; border-radius: 4px;">
+          No Image
+        </div>
+      <% end %>
+
+      <div>
+        <h3><%= link_to movie.title, movie_path(movie) %></h3>
+        <p><strong>Rating:</strong> <%= movie.rating %></p>
+        <p><strong>Duration:</strong> <%= movie.duration %> minutes</p>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- ✅ Pagination Controls -->
+  <%= pagy_nav(@pagy).html_safe %>
+
+<% else %>
+  <p>No movies available at the moment.</p>
+<% end %>

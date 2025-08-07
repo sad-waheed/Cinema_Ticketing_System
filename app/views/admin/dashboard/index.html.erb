@@ -1,0 +1,7 @@
+<h1>Welcome, <%= current_admin&.name %>!</h1>
+
+<ul>
+  <li><%= link_to "Manage Movies", admin_movies_path %></li>
+  <li><%= link_to "Manage Halls", admin_halls_path %></li>
+  <li><%= link_to "Manage Users", admin_users_path(role: "admin") %></li>
+</ul>

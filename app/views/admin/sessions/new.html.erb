@@ -1,0 +1,26 @@
+<h1>Admin Login</h1>
+<div class="container" style="margin: 2rem;">
+  <div class="flash-messages">
+    <% flash.each do |key, message| %>
+      <p style="color: <%= key == 'notice' ? 'green' : 'red' %>;"><%= message %></p>
+    <% end %>
+  </div>
+
+  <%= yield %>
+</div>
+<%= form_with url: admin_sessions_path, method: :post do |form| %>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.email_field :email, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Log In" %>
+  </div>
+<% end %>

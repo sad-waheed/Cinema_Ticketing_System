@@ -1,0 +1,28 @@
+<h2><%= @movie.title %></h2>
+
+<% if @movie.image_data.present? %>
+  <img src="<%= @movie.image_base64 %>" alt="Image of <%= @movie.title %>" style="max-width: 300px; max-height: 300px; margin-bottom: 1rem; border-radius: 6px;" />
+<% end %>
+
+<p><strong>Rating:</strong> <%= @movie.rating %></p>
+<p><strong>Duration:</strong> <%= @movie.duration %> minutes</p>
+
+<h3>Upcoming Showtimes:</h3>
+
+<% if @shows.any? %>
+  <ul>
+    <% @shows.each do |show| %>
+      <li>
+        <%= show.start_time.strftime("%A, %B %d, %Y %I:%M %p") %> in <%= show.hall.name %>
+        <%= link_to "Book", new_booking_path(show_id: show.id) %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= pagy_nav(@pagy).html_safe %>
+<% else %>
+  <p>No upcoming shows for this movie.</p>
+<% end %>
+
+<br>
+<%= link_to "← Back to All Movies", movies_path, class: "button" %>
